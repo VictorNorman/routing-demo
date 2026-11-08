@@ -23,6 +23,16 @@ request and labels it `PAGE`, `data` or `file`.
 | `npm run build` | Rebuild the Angular app after editing it |
 | `npm run dev --prefix client` | `ng serve` on port 4200 with live reload; run `npm start` too, for the API |
 
+## Try it in the browser (StackBlitz)
+
+No install needed: open
+https://stackblitz.com/github/VictorNorman/routing-demo
+
+StackBlitz installs the packages, builds the Angular app and starts the server
+(`npm run stackblitz`). The first build takes a minute or two; wait for the
+preview pane to show the app. Use "Open in New Tab" for the best experience.
+The `--no-fallback` demo needs a local run (`npm run start:no-fallback`).
+
 ## What's on screen
 
 - **Page loaded at …**: changes only on a full page load. Clicking around the
