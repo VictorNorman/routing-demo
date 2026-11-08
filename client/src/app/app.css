@@ -1,0 +1,86 @@
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 24px;
+  background: #172033;
+  color: #f5f2ec;
+}
+
+.top-bar a {
+  color: #f5f2ec;
+  text-decoration: none;
+}
+
+.top-bar nav {
+  display: flex;
+  gap: 16px;
+}
+
+.top-bar nav a.active {
+  border-bottom: 2px solid #f2b880;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.user {
+  font-size: 14px;
+  color: #c9d2df;
+}
+
+.page-loaded {
+  margin: 0;
+  padding: 8px 24px;
+  font-size: 13px;
+  background: #e8e2d6;
+}
+
+.app-outlet {
+  margin: 16px 24px;
+  padding: 16px 24px;
+  border: 2px dashed #8c97ab;
+  border-radius: 12px;
+  background: #fffdf8;
+}
+
+.router-log {
+  margin: 0 24px 16px;
+  padding: 12px 20px;
+  background: #1b2333;
+  color: #e8e3d8;
+  border-radius: 12px;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+}
+
+.router-log h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #f2b880;
+}
+
+.router-log ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.router-log .time {
+  color: #8c97ab;
+}
+
+.other-demos {
+  margin: 0 24px 24px;
+  font-size: 14px;
+}
+
+.other-demos a {
+  margin-left: 12px;
+}

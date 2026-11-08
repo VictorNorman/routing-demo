@@ -1,0 +1,17 @@
+{
+  "name": "routing-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Classroom demo for client-side routing, the index.html fallback, Angular nested routes, guards and server middleware.",
+  "scripts": {
+    "setup": "npm install && npm install --prefix client",
+    "build": "npm run build --prefix client",
+    "start": "node server/server.js",
+    "start:no-fallback": "node server/server.js --no-fallback",
+    "demo": "npm run build && npm start"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

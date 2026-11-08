@@ -1,0 +1,41 @@
+<header class="top-bar">
+  <a class="brand" routerLink="/courses">CS Courses</a>
+  <nav>
+    <a routerLink="/courses" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Courses</a>
+    <a routerLink="/admin" routerLinkActive="active">Admin</a>
+  </nav>
+  <span class="spacer"></span>
+  @if (auth.user(); as user) {
+    <span class="user">{{ user.name }} ({{ user.role }})</span>
+    <button type="button" (click)="signOut()">Sign out</button>
+  } @else {
+    <a routerLink="/login">Sign in</a>
+  }
+</header>
+
+<p class="page-loaded">
+  Page loaded at <b>{{ pageLoadedAt }}</b>. This time only changes on a full page load.
+</p>
+
+<main class="app-outlet">
+  <p class="component-label">AppComponent's &lt;router-outlet&gt;</p>
+  <router-outlet />
+</main>
+
+<section class="router-log">
+  <h3>Router events</h3>
+  <ul>
+    @for (entry of routerLog(); track $index) {
+      <li><span class="time">{{ entry.time }}</span> {{ entry.message }}</li>
+    } @empty {
+      <li>No navigations yet.</li>
+    }
+  </ul>
+</section>
+
+<footer class="other-demos">
+  Other demos (full page loads):
+  <a href="/vanilla/">Tiny vanilla router</a>
+  <a href="/static-site/">Static file server</a>
+  <a href="/server-rendered/courses">Server-rendered pages</a>
+</footer>

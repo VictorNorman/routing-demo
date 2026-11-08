@@ -1,0 +1,116 @@
+/* Global styles for the routing demo. */
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #172033;
+  background: #f5f2ec;
+  line-height: 1.5;
+}
+
+a {
+  color: #2457c5;
+}
+
+h2 {
+  margin: 4px 0 4px;
+}
+
+code {
+  background: #efeae0;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+button {
+  font: inherit;
+  padding: 6px 14px;
+  border: 1px solid #2457c5;
+  border-radius: 8px;
+  background: #fffdf8;
+  color: #2457c5;
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+  min-width: 420px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 6px 12px;
+  border-bottom: 1px solid #e2dcd0;
+}
+
+.component-label {
+  margin: 0 0 8px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  color: #8c97ab;
+}
+
+.hint {
+  color: #4a5363;
+  font-size: 14px;
+}
+
+.error {
+  color: #a84a15;
+  font-weight: 600;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.course-list {
+  padding-left: 20px;
+}
+
+.course-list li {
+  margin: 6px 0;
+}
+
+.subtitle {
+  margin: 0 0 12px;
+  color: #4a5363;
+}
+
+.shell {
+  border: 2px dashed #2457c5;
+  border-radius: 12px;
+  padding: 12px 20px 20px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.tabs a {
+  padding: 4px 14px;
+  border: 1px solid #d8d1c3;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #4a5363;
+}
+
+.tabs a.active {
+  background: #2457c5;
+  border-color: #2457c5;
+  color: #f5f2ec;
+}
+
+.outlet {
+  border: 2px dashed #a84a15;
+  border-radius: 12px;
+  padding: 12px 20px;
+  background: #efeae0;
+}
+
+.roster {
+  padding-left: 20px;
+}

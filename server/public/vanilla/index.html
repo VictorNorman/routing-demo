@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tiny vanilla router</title>
+    <!-- Absolute paths, so these still load from a deep link like /vanilla/courses/cs336 -->
+    <link rel="stylesheet" href="/demo-pages.css">
+    <script type="module" src="/vanilla/router.js"></script>
+  </head>
+  <body>
+    <p class="banner">Tiny vanilla router · page loaded at <span id="loaded-at"></span> · this time only changes on a full page load</p>
+    <h1>Tiny router in plain JavaScript</h1>
+
+    <nav>
+      <a href="/vanilla/" data-link>Home</a>
+      <a href="/vanilla/courses" data-link>Courses</a>
+      <a href="/vanilla/courses/cs336" data-link>cs336</a>
+      <a href="/vanilla/courses/cs262" data-link>cs262</a>
+      <a href="/vanilla/nope" data-link>A bad URL</a>
+      <a href="/vanilla/courses">Courses, without data-link</a>
+    </nav>
+
+    <h2>The view</h2>
+    <div id="view"></div>
+
+    <h2>Event log</h2>
+    <pre id="log"></pre>
+
+    <p><a href="/">← Back to the Angular app</a></p>
+  </body>
+</html>
