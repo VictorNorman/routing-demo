@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { httpResource } from '@angular/common/http';
+import { Injectable, Signal } from '@angular/core';
 
 export interface Course {
   id: string;
@@ -21,27 +20,36 @@ export interface GradeRecord {
 }
 
 // After startup, the app only fetches JSON like this, never new HTML pages.
+// Each method returns an httpResource: its value(), error(), and isLoading() are signals.
+// Resources re-fetch automatically when a signal read inside the request function changes.
+// Call these methods from an injection context (a field initializer or constructor).
 @Injectable({ providedIn: 'root' })
 export class CourseDataService {
-  private readonly http = inject(HttpClient);
-
-  getCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>('/api/courses');
+  getCourses() {
+    return httpResource<Course[]>(() => '/api/courses', {
+      defaultValue: [],
+    });
   }
 
-  getCourse(courseId: string): Observable<Course> {
-    return this.http.get<Course>(`/api/courses/${courseId}`);
+  getCourse(courseId: Signal<string>) {
+    return httpResource<Course>(() => `/api/courses/${courseId()}`);
   }
 
-  getAssignments(courseId: string): Observable<Assignment[]> {
-    return this.http.get<Assignment[]>(`/api/courses/${courseId}/assignments`);
+  getAssignments(courseId: Signal<string>) {
+    return httpResource<Assignment[]>(() => `/api/courses/${courseId()}/assignments`, {
+      defaultValue: [],
+    });
   }
 
-  getStudents(courseId: string): Observable<string[]> {
-    return this.http.get<string[]>(`/api/courses/${courseId}/students`);
+  getStudents(courseId: Signal<string>) {
+    return httpResource<string[]>(() => `/api/courses/${courseId()}/students`, {
+      defaultValue: [],
+    });
   }
 
-  getAllGrades(): Observable<GradeRecord[]> {
-    return this.http.get<GradeRecord[]>('/api/admin/grades');
+  getAllGrades() {
+    return httpResource<GradeRecord[]>(() => '/api/admin/grades', {
+      defaultValue: [],
+    });
   }
 }

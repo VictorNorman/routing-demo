@@ -27,9 +27,8 @@ export class LoginComponent {
   readonly returnUrl = input<string>();
   readonly needs = input<string>();
 
-  signIn(role: 'student' | 'admin'): void {
-    this.auth.signIn(role).subscribe(() => {
-      this.router.navigateByUrl(this.returnUrl() ?? '/courses');
-    });
+  async signIn(role: 'student' | 'admin'): Promise<void> {
+    await this.auth.signIn(role);
+    await this.router.navigateByUrl(this.returnUrl() ?? '/courses');
   }
 }

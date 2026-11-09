@@ -1,6 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 
 export interface SignedInUser {
   name: string;
@@ -15,8 +13,6 @@ const storageKey = 'routing-demo-user';
 // guard believes you, but the server still knows your real role from the token.
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly http = inject(HttpClient);
-
   readonly user = signal<SignedInUser | null>(this.readStoredUser());
 
   isSignedIn(): boolean {
@@ -31,13 +27,22 @@ export class AuthService {
     return this.readStoredUser()?.token ?? null;
   }
 
-  signIn(role: 'student' | 'admin'): Observable<SignedInUser> {
-    return this.http.post<SignedInUser>('/api/login', { role }).pipe(
-      tap((signedInUser) => {
-        sessionStorage.setItem(storageKey, JSON.stringify(signedInUser));
-        this.user.set(signedInUser);
-      }),
-    );
+  // A one-time action (not a read), so it's a plain async function rather than a resource.
+  async signIn(role: 'student' | 'admin'): Promise<SignedInUser> {
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ role }),
+    });
+    if (!response.ok) {
+      throw new Error(`Login failed: ${response.status}`);
+    }
+    const signedInUser = (await response.json()) as SignedInUser;
+    sessionStorage.setItem(storageKey, JSON.stringify(signedInUser));
+    this.user.set(signedInUser);
+    return signedInUser;
   }
 
   signOut(): void {

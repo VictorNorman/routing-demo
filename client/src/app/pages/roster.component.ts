@@ -1,7 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+import { Component, inject, input } from '@angular/core';
 
 import { CourseDataService } from '../data/course-data.service';
 
@@ -21,17 +18,13 @@ import { CourseDataService } from '../data/course-data.service';
   `,
 })
 export class RosterComponent {
-  private readonly route = inject(ActivatedRoute);
   private readonly courseData = inject(CourseDataService);
 
+  // The router sets this from the parent's :courseId (see paramsInheritanceStrategy).
+  readonly courseId = input.required<string>();
+
   // The students endpoint is protected by requireAuth middleware on the server.
-  readonly students = toSignal(
-    this.route.parent!.paramMap.pipe(
-      map((params) => params.get('courseId') ?? ''),
-      switchMap((courseId) => this.courseData.getStudents(courseId)),
-    ),
-    { initialValue: [] },
-  );
+  readonly students = this.courseData.getStudents(this.courseId).value;
 
   readonly createdAt = new Date().toLocaleTimeString();
 }

@@ -1,7 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+import { Component, inject, input } from '@angular/core';
 
 import { CourseDataService } from '../data/course-data.service';
 
@@ -30,17 +27,12 @@ import { CourseDataService } from '../data/course-data.service';
   `,
 })
 export class AssignmentListComponent {
-  private readonly route = inject(ActivatedRoute);
   private readonly courseData = inject(CourseDataService);
 
-  // Option B: a child route reads :courseId from its parent route.
-  readonly assignments = toSignal(
-    this.route.parent!.paramMap.pipe(
-      map((params) => params.get('courseId') ?? ''),
-      switchMap((courseId) => this.courseData.getAssignments(courseId)),
-    ),
-    { initialValue: [] },
-  );
+  // The router sets this from the parent's :courseId (see paramsInheritanceStrategy).
+  readonly courseId = input.required<string>();
+
+  readonly assignments = this.courseData.getAssignments(this.courseId).value;
 
   readonly createdAt = new Date().toLocaleTimeString();
 }

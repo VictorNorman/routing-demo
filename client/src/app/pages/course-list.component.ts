@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
 import { CourseDataService } from '../data/course-data.service';
@@ -27,5 +26,5 @@ import { CourseDataService } from '../data/course-data.service';
 export class CourseListComponent {
   private readonly courseData = inject(CourseDataService);
 
-  readonly courses = toSignal(this.courseData.getCourses(), { initialValue: [] });
+  readonly courses = this.courseData.getCourses().value;
 }

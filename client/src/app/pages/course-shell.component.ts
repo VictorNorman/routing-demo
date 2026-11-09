@@ -1,7 +1,5 @@
-import { Component, inject, input } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { Component, computed, inject, input } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { catchError, of, switchMap } from 'rxjs';
 
 import { CourseDataService } from '../data/course-data.service';
 
@@ -47,11 +45,14 @@ export class CourseShellComponent {
   readonly courseId = input.required<string>();
 
   // undefined = loading, null = no such course.
-  readonly course = toSignal(
-    toObservable(this.courseId).pipe(
-      switchMap((courseId) => this.courseData.getCourse(courseId).pipe(catchError(() => of(null)))),
-    ),
-  );
+  private readonly courseResource = this.courseData.getCourse(this.courseId);
+
+  readonly course = computed(() => {
+    if (this.courseResource.error()) {
+      return null;
+    }
+    return this.courseResource.hasValue() ? this.courseResource.value() : undefined;
+  });
 
   readonly courseIds = ['cs336', 'cs262', 'cs300'];
 

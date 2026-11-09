@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 
-import { CourseDataService, GradeRecord } from '../data/course-data.service';
+import { CourseDataService } from '../data/course-data.service';
 
 // Protected twice: adminGuard (in the browser, for user experience)
 // and requireAdmin middleware (on the server, for security).
@@ -20,7 +20,7 @@ import { CourseDataService, GradeRecord } from '../data/course-data.service';
           <th>Course</th>
           <th>Grade</th>
         </tr>
-        @for (record of grades(); track record.student) {
+        @for (record of gradesResource.value(); track record.student) {
           <tr>
             <td>{{ record.student }}</td>
             <td>{{ record.course }}</td>
@@ -34,15 +34,11 @@ import { CourseDataService, GradeRecord } from '../data/course-data.service';
 export class AdminComponent {
   private readonly courseData = inject(CourseDataService);
 
-  readonly grades = signal<GradeRecord[]>([]);
-  readonly errorMessage = signal<string | null>(null);
+  private readonly gradesResource = this.courseData.getAllGrades();
 
-  constructor() {
-    this.courseData.getAllGrades().subscribe({
-      next: (records) => this.grades.set(records),
-      error: (error: HttpErrorResponse) => {
-        this.errorMessage.set(`${error.status} ${error.error?.error ?? error.statusText}`);
-      },
-    });
-  }
+  readonly grades = this.gradesResource.value;
+  readonly errorMessage = computed(() => {
+    const error = this.gradesResource.error() as HttpErrorResponse | undefined;
+    return error ? `${error.status} ${error.error?.error ?? error.statusText}` : null;
+  });
 }
